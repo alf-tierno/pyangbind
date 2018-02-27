@@ -471,7 +471,8 @@ class pybindJSONDecoder(object):
           if chk._yang_type == "empty":
             # A 'none' value in the JSON means that an empty value is set, 
             # since this is serialised as [null] in the input JSON.
-            if val == [None]:
+            # although RFC7951 indicates that it is serialized as a [null], allow also a null as it is a common practice
+            if val == [None] or val is None:
               val = True
             else:
               raise ValueError("Invalid value for empty in input JSON " + \
